@@ -2,7 +2,7 @@ const STORAGE_KEY = "soxl_loop_app_v2";
 
 const defaultState = {
   tide: "썰물",
-  prevClose: 48.87,
+  prevClose: 0,
   seed: 10000,
   targetPct: 2.5,
   milBudget: 450,

@@ -347,7 +347,7 @@ function importBackup() {
 }
 
 function resetAllData() {
-  if (confirm("모든 체결 기록을 초기화하고 초기 상태(LP-01 18주 @ $48.87)로 되돌릴까요?")) {
+  if (confirm("모든 체결 기록을 초기화하고 초기 상태(LP-01 0주 @ $0)로 되돌릴까요?")) {
     localStorage.removeItem(STORAGE_KEY);
     state = JSON.parse(JSON.stringify(defaultState));
     init();

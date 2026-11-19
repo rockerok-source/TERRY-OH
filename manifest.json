@@ -1,0 +1,9 @@
+{
+  "name": "Inno Trade 모바일 웹앱",
+  "short_name": "Inno Trade",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0f172a",
+  "lang": "ko"
+}

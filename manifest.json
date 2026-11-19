@@ -1,9 +1,9 @@
 {
-  "name": "Inno Trade 모바일 웹앱",
-  "short_name": "Inno Trade",
+  "name": "SOXL 무한매수법 트래커",
+  "short_name": "SOXL 무한매수",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0b1120",
-  "theme_color": "#0f172a",
+  "theme_color": "#0b1120",
   "lang": "ko"
 }

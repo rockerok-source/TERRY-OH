@@ -6,6 +6,8 @@
   --muted: #94a3b8;
   --accent: #38bdf8;
   --accent-text: #082f49;
+  --pos: #34d399;
+  --neg: #f87171;
   --border: rgba(148, 163, 184, 0.16);
 }
 
@@ -21,27 +23,27 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .app-shell {
   min-height: 100dvh;
   max-width: 640px;
   margin: 0 auto;
-  padding-top: calc(16px + env(safe-area-inset-top));
-  padding-right: calc(16px + env(safe-area-inset-right));
-  padding-bottom: calc(20px + env(safe-area-inset-bottom));
-  padding-left: calc(16px + env(safe-area-inset-left));
+  padding:
+    calc(14px + env(safe-area-inset-top))
+    calc(14px + env(safe-area-inset-right))
+    calc(20px + env(safe-area-inset-bottom))
+    calc(14px + env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 2px;
 }
 
 .eyebrow {
@@ -54,20 +56,14 @@ body {
 
 h1 {
   margin: 2px 0 0;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
 }
 
 h2 {
-  margin: 0 0 6px;
-  font-size: 17px;
+  margin: 0 0 10px;
+  font-size: 16px;
   font-weight: 700;
-}
-
-.muted {
-  margin: 0 0 14px;
-  font-size: 14px;
-  color: var(--muted);
 }
 
 .badge {
@@ -79,36 +75,117 @@ h2 {
   color: var(--accent);
 }
 
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px;
 }
 
-.card + .card {
-  margin-top: 14px;
+.highlight-card {
+  border-color: rgba(56, 189, 248, 0.35);
 }
 
-.input-row {
-  display: flex;
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr;
   gap: 8px;
 }
 
-input[type="text"] {
-  flex: 1;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+input,
+select {
+  width: 100%;
   min-width: 0;
   font-size: 16px;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--text);
   outline: none;
 }
 
-input[type="text"]:focus {
+input:focus,
+select:focus {
   border-color: var(--accent);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stat-box {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stat-val {
+  display: block;
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.summary-bar {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.summary-bar strong {
+  color: var(--text);
+}
+
+.pos {
+  color: var(--pos) !important;
+}
+
+.neg {
+  color: var(--neg) !important;
+}
+
+.trade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 button {
@@ -121,61 +198,72 @@ button {
 }
 
 .btn-primary {
-  padding: 0 18px;
-  min-height: 46px;
+  min-height: 44px;
   background: var(--accent);
   color: var(--accent-text);
-  white-space: nowrap;
+}
+
+.full-btn {
+  width: 100%;
 }
 
 .btn-ghost {
   width: 100%;
-  min-height: 44px;
+  min-height: 42px;
   background: transparent;
   color: var(--muted);
   border: 1px solid var(--border);
 }
 
-.note-list {
+.trade-list {
   list-style: none;
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.note-item {
+.trade-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
   background: var(--surface-2);
-  font-size: 15px;
+  font-size: 14px;
 }
 
-.note-item.done span {
-  text-decoration: line-through;
-  color: var(--muted);
+.trade-tag {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-right: 6px;
 }
 
-.note-delete {
+.tag-buy {
+  background: rgba(52, 211, 153, 0.16);
+  color: var(--pos);
+}
+
+.tag-sell {
+  background: rgba(248, 113, 113, 0.16);
+  color: var(--neg);
+}
+
+.del-btn {
   background: transparent;
   color: var(--muted);
-  font-size: 14px;
-  padding: 4px 8px;
+  font-size: 13px;
+  padding: 4px 6px;
 }
 
-.guide-list {
-  margin: 0;
-  padding-left: 20px;
-  color: var(--text);
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.empty-msg {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
 }
 
 .app-footer {

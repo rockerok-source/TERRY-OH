@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#0b1120" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Inno Trade" />
-  <title>Inno Trade 모바일 웹앱</title>
+  <meta name="apple-mobile-web-app-title" content="SOXL 무한매수" />
+  <title>SOXL 무한매수법 트래커</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -15,43 +15,91 @@
   <div class="app-shell">
     <header class="app-header">
       <div>
-        <p class="eyebrow">MOBILE WEB APP</p>
-        <h1>Inno Trade</h1>
+        <p class="eyebrow">SOXL INFINITE BUY</p>
+        <h1>SOXL 무한매수 트래커</h1>
       </div>
-      <span id="statusBadge" class="badge">준비됨</span>
+      <span id="saveBadge" class="badge">자동저장</span>
     </header>
 
     <main class="app-main">
       <section class="card">
-        <h2>빠른 메모 / 체크리스트</h2>
-        <p class="muted">아이폰에서 바로 확인하거나 기록할 항목을 추가해 보세요. (브라우저에 자동 저장됩니다)</p>
+        <h2>1. 투자 설정</h2>
+        <div class="grid-2">
+          <label class="field">
+            <span>총 시드머니 ($)</span>
+            <input id="seedInput" type="number" inputmode="decimal" step="100" value="10000" />
+          </label>
+          <label class="field">
+            <span>분할 회차 (회)</span>
+            <input id="roundsInput" type="number" inputmode="numeric" min="10" max="100" step="1" value="40" />
+          </label>
+          <label class="field">
+            <span>목표 수익률 (%)</span>
+            <input id="targetPctInput" type="number" inputmode="decimal" step="0.5" value="10" />
+          </label>
+          <label class="field">
+            <span>현재 SOXL 가격 ($)</span>
+            <input id="priceInput" type="number" inputmode="decimal" step="0.01" placeholder="예: 28.50" />
+          </label>
+        </div>
+      </section>
 
-        <form id="noteForm" class="input-row">
-          <input
-            id="noteInput"
-            type="text"
-            placeholder="예: 부품 재고 확인, 발주 내역..."
-            autocomplete="off"
-            required
-          />
-          <button type="submit" class="btn-primary">추가</button>
-        </form>
-
-        <ul id="noteList" class="note-list"></ul>
+      <section class="card highlight-card">
+        <h2>2. 이번 회차 계산</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">1회 매수금</span>
+            <strong id="perBuyAmt" class="stat-val">$250.00</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">예상 매수 수량</span>
+            <strong id="estShares" class="stat-val">0.00주</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">평균 단가</span>
+            <strong id="avgPrice" class="stat-val">$0.00</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">목표 매도가</span>
+            <strong id="targetPrice" class="stat-val">$0.00</strong>
+          </div>
+        </div>
+        <div class="summary-bar">
+          <span>보유: <strong id="totalShares">0.00</strong>주</span>
+          <span>투자금: <strong id="totalInvested">$0.00</strong></span>
+          <span>평가손익: <strong id="pnlText">$0.00 (0.0%)</strong></span>
+        </div>
       </section>
 
       <section class="card">
-        <h2>아이폰 홈 화면 설치 방법</h2>
-        <ol class="guide-list">
-          <li>아이폰 <strong>Safari</strong>에서 배포된 GitLab Pages 주소로 접속합니다.</li>
-          <li>하단 중앙의 <strong>공유 버튼(□↑)</strong>을 누릅니다.</li>
-          <li><strong>[홈 화면에 추가]</strong>를 선택하면 앱 아이콘이 생성됩니다.</li>
-        </ol>
+        <h2>3. 체결 기록</h2>
+        <form id="tradeForm" class="trade-form">
+          <div class="grid-3">
+            <label class="field">
+              <span>구분</span>
+              <select id="tradeType">
+                <option value="BUY">매수</option>
+                <option value="SELL">매도</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>체결가 ($)</span>
+              <input id="tradePrice" type="number" inputmode="decimal" step="0.01" placeholder="0.00" required />
+            </label>
+            <label class="field">
+              <span>수량 (주)</span>
+              <input id="tradeQty" type="number" inputmode="decimal" step="0.01" placeholder="0.00" required />
+            </label>
+          </div>
+          <button type="submit" class="btn-primary full-btn">기록 추가</button>
+        </form>
+
+        <ul id="tradeList" class="trade-list"></ul>
       </section>
     </main>
 
     <footer class="app-footer">
-      <button id="clearAllBtn" type="button" class="btn-ghost">전체 지우기</button>
+      <button id="resetTradesBtn" type="button" class="btn-ghost">체결 내역 초기화</button>
     </footer>
   </div>
 

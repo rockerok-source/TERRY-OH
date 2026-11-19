@@ -1,9 +1,17 @@
 {
-  "name": "SOXL 무한매수법 트래커",
-  "short_name": "SOXL 무한매수",
-  "start_url": "./",
+  "name": "SOXL 루프투자법 모바일",
+  "short_name": "SOXL 루프봇",
+  "description": "아이폰 맞춤형 SOXL 루프투자법 LOC 계산기 및 독립 묶음 관리 장부",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0b1120",
-  "theme_color": "#0b1120",
-  "lang": "ko"
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%230f172a'/><text x='90' y='112' font-size='84' text-anchor='middle' fill='%2334d399'>🔄</text></svg>",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
 }

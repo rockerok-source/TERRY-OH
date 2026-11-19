@@ -7,476 +7,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="SOXL 루프봇" />
   <meta name="theme-color" content="#0f172a" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
   <title>SOXL 루프투자법 모바일</title>
-  <style>
-    :root {
-      --bg-app: #f1f5f9;
-      --bg-card: #ffffff;
-      --bg-dark: #0f172a;
-      --text-main: #0f172a;
-      --text-sub: #64748b;
-      --accent-teal: #0f766e;
-      --accent-teal-light: #ccfbf1;
-      --accent-blue: #1d4ed8;
-      --accent-blue-light: #dbeafe;
-      --accent-red: #dc2626;
-      --accent-red-light: #fee2e2;
-      --accent-amber: #b45309;
-      --accent-amber-light: #fef3c7;
-      --border-color: #e2e8f0;
-      --safe-top: env(safe-area-inset-top, 20px);
-      --safe-bottom: env(safe-area-inset-bottom, 20px);
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-app);
-      color: var(--text-main);
-      padding-top: calc(var(--safe-top) + 56px);
-      padding-bottom: calc(var(--safe-bottom) + 76px);
-      overscroll-behavior-y: none;
-    }
-
-    /* Top Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: calc(var(--safe-top) + 56px);
-      padding-top: var(--safe-top);
-      background: var(--bg-dark);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 16px;
-      padding-right: 16px;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-
-    header h1 {
-      font-size: 17px;
-      font-weight: 700;
-      margin: 0;
-      letter-spacing: -0.3px;
-    }
-
-    .badge-seed {
-      font-size: 12px;
-      background: rgba(255,255,255,0.15);
-      padding: 4px 10px;
-      border-radius: 99px;
-      font-weight: 600;
-    }
-
-    /* Main Container */
-    main {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 12px 14px;
-    }
-
-    .tab-view {
-      display: none;
-    }
-    .tab-view.active {
-      display: block;
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cards */
-    .card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      border: 1px solid var(--border-color);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin: 0;
-    }
-
-    .card-sub {
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-
-    /* Tide Toggle */
-    .tide-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #e2e8f0;
-      border-radius: 12px;
-      padding: 4px;
-      gap: 4px;
-      margin-bottom: 14px;
-    }
-
-    .tide-btn {
-      border: none;
-      border-radius: 9px;
-      padding: 10px 0;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-sub);
-      transition: all 0.2s;
-    }
-
-    .tide-btn.active-mil {
-      background: var(--accent-red);
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(220,38,38,0.3);
-    }
-
-    .tide-btn.active-seol {
-      background: var(--accent-blue);
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(29,78,216,0.3);
-    }
-
-    /* Input Group */
-    .input-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .input-row label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .price-input-wrap {
-      display: flex;
-      align-items: center;
-      background: #fef9c3;
-      border: 1.5px solid #eab308;
-      border-radius: 10px;
-      padding: 6px 12px;
-      width: 145px;
-    }
-
-    .price-input-wrap span {
-      font-weight: 700;
-      color: #854d0e;
-      margin-right: 4px;
-      font-size: 16px;
-    }
-
-    .price-input-wrap input {
-      width: 100%;
-      border: none;
-      background: transparent;
-      font-size: 17px;
-      font-weight: 700;
-      color: #1e3a8a;
-      text-align: right;
-      outline: none;
-    }
-
-    .budget-pill {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #166534;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Order Table (Mobile 3-column clean) */
-    table.order-tbl {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 6px;
-    }
-
-    table.order-tbl th {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-sub);
-      text-align: center;
-      padding: 8px 4px;
-      border-bottom: 1.5px solid var(--border-color);
-      background: #f8fafc;
-    }
-
-    table.order-tbl td {
-      padding: 11px 4px;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 13px;
-      text-align: center;
-    }
-
-    table.order-tbl td:first-child {
-      text-align: left;
-      padding-left: 6px;
-      font-weight: 600;
-    }
-
-    .price-cell {
-      font-weight: 700;
-      color: var(--accent-blue);
-      font-size: 14px;
-    }
-
-    .sell-price-cell {
-      font-weight: 700;
-      color: var(--accent-red);
-      font-size: 14px;
-    }
-
-    .qty-badge {
-      display: inline-block;
-      background: #f1f5f9;
-      color: var(--text-main);
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 13px;
-    }
-
-    .btn-exec {
-      background: var(--accent-teal);
-      color: white;
-      border: none;
-      border-radius: 7px;
-      padding: 5px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-exec:active {
-      opacity: 0.8;
-      transform: scale(0.97);
-    }
-
-    /* Lot Card Item */
-    .lot-card {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: #ffffff;
-    }
-
-    .lot-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .lot-id {
-      font-weight: 800;
-      font-size: 14px;
-      color: var(--bg-dark);
-      background: #e2e8f0;
-      padding: 2px 8px;
-      border-radius: 6px;
-    }
-
-    .lot-date {
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-
-    .lot-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-      background: #f8fafc;
-      padding: 8px;
-      border-radius: 8px;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .lot-metric span {
-      display: block;
-      font-size: 11px;
-      color: var(--text-sub);
-    }
-
-    .lot-metric strong {
-      font-size: 13px;
-      color: var(--text-main);
-    }
-
-    .lot-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .profit-tag {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-teal);
-    }
-
-    .btn-sell-done {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* Separate Drawer */
-    .drawer-box {
-      background: #f8fafc;
-      border: 1px dashed #94a3b8;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-
-    .drawer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 13px;
-    }
-    .drawer-row:last-child { border-bottom: none; }
-
-    /* Form Controls in Settings & Add Lot */
-    .form-group {
-      margin-bottom: 12px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-sub);
-      margin-bottom: 4px;
-    }
-    .form-control {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #cbd5e1;
-      font-size: 15px;
-      background: #ffffff;
-    }
-
-    .btn-primary {
-      width: 100%;
-      background: var(--bg-dark);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      padding: 13px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 4px;
-    }
-
-    /* Bottom Navigation */
-    nav.bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: calc(var(--safe-bottom) + 60px);
-      padding-bottom: var(--safe-bottom);
-      background: #ffffff;
-      border-top: 1px solid var(--border-color);
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      z-index: 100;
-    }
-
-    .nav-item {
-      border: none;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      color: var(--text-sub);
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .nav-item.active {
-      color: var(--accent-teal);
-      font-weight: 800;
-    }
-
-    .nav-icon {
-      font-size: 19px;
-      line-height: 1;
-    }
-
-    /* Summary Strip */
-    .summary-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .stat-box {
-      background: var(--bg-dark);
-      color: #ffffff;
-      padding: 12px;
-      border-radius: 12px;
-    }
-    .stat-box span {
-      font-size: 11px;
-      color: #94a3b8;
-      display: block;
-    }
-    .stat-box strong {
-      font-size: 17px;
-      font-weight: 800;
-      margin-top: 2px;
-      display: block;
-    }
-  </style>
 </head>
 <body>
 
@@ -486,6 +19,20 @@
 </header>
 
 <main>
+  <!-- 상단 핵심 자산 & 수익 현황 요약 대시보드 -->
+  <div class="dashboard-grid">
+    <div class="dash-card">
+      <span class="dash-label">총 투자금액 (보유 원금)</span>
+      <strong class="dash-value" id="dashTotalInvested">$879.66</strong>
+      <span class="dash-sub" id="dashCashRemain">잔여 현금: $8,120.34</span>
+    </div>
+    <div class="dash-card">
+      <span class="dash-label">총 누적 수익금액</span>
+      <strong class="dash-value profit-plus" id="dashTotalProfit">+$0.00</strong>
+      <span class="dash-sub" id="dashReturnPct">시드 대비 수익률: 0.00%</span>
+    </div>
+  </div>
+
   <!-- TAB 1: 오늘의 주문 계산기 -->
   <section id="tab-calc" class="tab-view active">
     <div class="card">
@@ -508,7 +55,7 @@
       </div>
 
       <div class="budget-pill">
-        <span id="activeBudgetLabel">썰물 1회 기본 매수금 (배 자산 10%)</span>
+        <span id="activeBudgetLabel">썰물 1회 확대 매수금 (배 자산 10%)</span>
         <strong id="activeBudgetValue">$900.00</strong>
       </div>
     </div>
@@ -558,25 +105,17 @@
 
   <!-- TAB 2: 보유 묶음(Lot) 관리 장부 -->
   <section id="tab-lots" class="tab-view">
-    <div class="summary-strip">
-      <div class="stat-box">
-        <span>루프 보유 수량 / 묶음</span>
-        <strong id="statActiveLots">18주 (1개 묶음)</strong>
-      </div>
-      <div class="stat-box">
-        <span>누적 실현 수익 (+2.5%)</span>
-        <strong id="statRealizedProfit" style="color:#34d399;">+$0.00</strong>
-      </div>
-    </div>
-
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">🗂️ 활성 보유 묶음 (독립 회전)</h2>
+        <div>
+          <h2 class="card-title">🗂️ 활성 보유 묶음 (독립 회전)</h2>
+          <span class="card-sub" id="statActiveLots">총 18주 · 1개 묶음 운용중</span>
+        </div>
         <button type="button" class="btn-exec" onclick="toggleAddForm()">+ 직접 추가</button>
       </div>
 
       <!-- 수동 묶음 추가 폼 -->
-      <div id="addLotForm" style="display:none; background:#f8fafc; padding:12px; border-radius:12px; margin-bottom:12px; border:1px solid #cbd5e1;">
+      <div id="addLotForm" class="manual-form">
         <div class="form-group">
           <label>체결 단가 ($)</label>
           <input type="number" id="manualPrice" class="form-control" step="0.01" inputmode="decimal" placeholder="예: 47.60" />
@@ -593,26 +132,37 @@
       </div>
     </div>
 
+    <!-- 익절 완료 히스토리 -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">✅ 익절 완료 내역</h2>
+        <span class="card-sub" id="soldCountLabel">0건 완료</span>
+      </div>
+      <div id="soldLotsList">
+        <p class="empty-msg">아직 익절 완료된 묶음이 없습니다.</p>
+      </div>
+    </div>
+
     <!-- 별도 관리 서랍 -->
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">🔒 별도 관리 서랍 (루프 평단 분리)</h2>
       </div>
-      <p style="font-size:12px; color:#64748b; margin-top:0;">
-        증권사 앱 통합 평단가와 무관하게 루프 회전에서 제외된 물량입니다.
+      <p class="helper-text">
+        증권사 앱 통합 평단가와 무관하게 루프 회전에서 제외된 별도 보유 물량입니다.
       </p>
       <div class="drawer-box">
         <div class="drawer-row">
           <div>
             <strong>기존 보유 SOXL (루프 이전)</strong><br/>
-            <span style="font-size:11px; color:#64748b;">평단 $55.68 · 목표 +2.5% ($57.07)</span>
+            <span class="sub-small">평단 $55.68 ($556.80) · 목표 +2.5% ($57.07)</span>
           </div>
           <span class="qty-badge">10주</span>
         </div>
         <div class="drawer-row">
           <div>
             <strong>등대 자산 TQQQ (시드 10%)</strong><br/>
-            <span style="font-size:11px; color:#64748b;">장기 홀딩 방어 자산 ($1,000 배정)</span>
+            <span class="sub-small">장기 홀딩 방어 자산 ($1,000.00 배정)</span>
           </div>
           <span class="qty-badge">10% 유지</span>
         </div>
@@ -647,15 +197,16 @@
 
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">💾 데이터 백업 및 초기화</h2>
+        <h2 class="card-title">💾 데이터 백업 및 복원</h2>
       </div>
-      <p style="font-size:12px; color:#64748b; margin-top:0;">
+      <p class="helper-text">
         모든 데이터는 현재 아이폰 Safari/브라우저 내부(LocalStorage)에 자동 저장됩니다.
       </p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-        <button type="button" class="btn-exec" style="padding:11px; font-size:13px;" onclick="exportBackup()">데이터 복사(백업)</button>
-        <button type="button" class="btn-sell-done" style="padding:11px; font-size:13px;" onclick="resetAllData()">초기 상태로 리셋</button>
+      <div class="btn-grid-2">
+        <button type="button" class="btn-exec btn-block" onclick="exportBackup()">데이터 복사(백업)</button>
+        <button type="button" class="btn-secondary btn-block" onclick="importBackup()">데이터 붙여넣기(복원)</button>
       </div>
+      <button type="button" class="btn-sell-done btn-block" style="margin-top:8px;" onclick="resetAllData()">초기 상태로 리셋</button>
     </div>
   </section>
 </main>
@@ -676,309 +227,6 @@
   </button>
 </nav>
 
-<script>
-  const STORAGE_KEY = "soxl_loop_app_v1";
-
-  const defaultState = {
-    tide: "썰물",
-    prevClose: 48.87,
-    seed: 10000,
-    targetPct: 2.5,
-    milBudget: 450,
-    seolBudget: 900,
-    nextLotNum: 2,
-    realizedProfit: 0,
-    lots: [
-      {
-        id: "LP-01",
-        date: "2026-11-19",
-        price: 48.87,
-        qty: 18,
-        status: "active"
-      }
-    ]
-  };
-
-  let state = loadState();
-
-  function loadState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return Object.assign({}, defaultState, JSON.parse(saved));
-    } catch (e) {}
-    return JSON.parse(JSON.stringify(defaultState));
-  }
-
-  function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
-
-  function init() {
-    const today = new Date();
-    document.getElementById("todayDateLabel").textContent = today.toISOString().slice(0, 10);
-    document.getElementById("prevCloseInput").value = state.prevClose;
-    document.getElementById("setSeed").value = state.seed;
-    document.getElementById("setTargetPct").value = state.targetPct;
-    document.getElementById("setMilBudget").value = state.milBudget;
-    document.getElementById("setSeolBudget").value = state.seolBudget;
-    document.getElementById("headerSeedBadge").textContent = "시드 $" + Number(state.seed).toLocaleString();
-
-    updateTideUI();
-    recalcOrders();
-    renderLots();
-  }
-
-  function switchTab(tabName) {
-    document.querySelectorAll(".tab-view").forEach(el => el.classList.remove("active"));
-    document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
-    document.getElementById("tab-" + tabName).classList.add("active");
-    document.getElementById("nav-" + tabName).classList.add("active");
-  }
-
-  function setTide(tideVal) {
-    state.tide = tideVal;
-    saveState();
-    updateTideUI();
-    recalcOrders();
-  }
-
-  function updateTideUI() {
-    const btnMil = document.getElementById("btnMilmul");
-    const btnSeol = document.getElementById("btnSeolmul");
-    if (state.tide === "밀물") {
-      btnMil.className = "tide-btn active-mil";
-      btnSeol.className = "tide-btn";
-      document.getElementById("activeBudgetLabel").textContent = "밀물 1회 기본 매수금 (배 자산 5%)";
-      document.getElementById("activeBudgetValue").textContent = "$" + Number(state.milBudget).toFixed(2);
-    } else {
-      btnMil.className = "tide-btn";
-      btnSeol.className = "tide-btn active-seol";
-      document.getElementById("activeBudgetLabel").textContent = "썰물 1회 확대 매수금 (배 자산 10%)";
-      document.getElementById("activeBudgetValue").textContent = "$" + Number(state.seolBudget).toFixed(2);
-    }
-  }
-
-  function recalcOrders() {
-    const inputVal = parseFloat(document.getElementById("prevCloseInput").value);
-    if (!isNaN(inputVal) && inputVal > 0) {
-      state.prevClose = inputVal;
-      saveState();
-    }
-    const p = state.prevClose;
-    const tRate = state.targetPct / 100;
-    const unitBudget = state.tide === "밀물" ? state.milBudget : state.seolBudget;
-
-    let rows = [];
-    if (state.tide === "밀물") {
-      const p1 = +(p * (1 + tRate)).toFixed(2);
-      const p2 = +(p - 0.01).toFixed(2);
-      const p3 = +(p * 0.97).toFixed(2);
-      rows = [
-        { label: "1단계 (상승추종)", price: p1, qty: Math.floor(unitBudget / p1) },
-        { label: "2단계 (기본하락)", price: p2, qty: Math.floor(unitBudget / p2) },
-        { label: "3단계 (-3% 하락)", price: p3, qty: Math.floor(unitBudget / p3) }
-      ];
-    } else {
-      const p1 = +(p - 0.01).toFixed(2);
-      const p2 = +(p * 0.97).toFixed(2);
-      const p3 = +(p * 0.94).toFixed(2);
-      rows = [
-        { label: "1단계 (기본하락)", price: p1, qty: Math.floor(unitBudget / p1) },
-        { label: "2단계 (-3% 하락)", price: p2, qty: Math.floor(unitBudget / p2) },
-        { label: "3단계 (-6% 1.5배)", price: p3, qty: Math.floor((unitBudget * 1.5) / p3) }
-      ];
-    }
-
-    const tbody = document.getElementById("buyOrderBody");
-    tbody.innerHTML = rows.map(r => `
-      <tr>
-        <td>${r.label}</td>
-        <td class="price-cell">$${r.price.toFixed(2)}</td>
-        <td><span class="qty-badge">${r.qty}주</span></td>
-        <td><button type="button" class="btn-exec" onclick="recordBuy(${r.price}, ${r.qty})">체결등록</button></td>
-      </tr>
-    `).join("");
-  }
-
-  function recordBuy(defaultPrice, defaultQty) {
-    const actualPriceStr = prompt("실제 체결된 단가($)를 입력하세요:", defaultPrice.toFixed(2));
-    if (actualPriceStr === null) return;
-    const actualPrice = parseFloat(actualPriceStr);
-    if (isNaN(actualPrice) || actualPrice <= 0) {
-      alert("올바른 단가를 입력해 주세요.");
-      return;
-    }
-
-    const actualQtyStr = prompt("실제 체결된 수량(주)을 입력하세요:", defaultQty);
-    if (actualQtyStr === null) return;
-    const actualQty = parseInt(actualQtyStr, 10);
-    if (isNaN(actualQty) || actualQty <= 0) {
-      alert("올바른 수량을 입력해 주세요.");
-      return;
-    }
-
-    const lotId = "LP-" + String(state.nextLotNum).padStart(2, "0");
-    state.nextLotNum += 1;
-    const todayStr = new Date().toISOString().slice(0, 10);
-
-    state.lots.push({
-      id: lotId,
-      date: todayStr,
-      price: actualPrice,
-      qty: actualQty,
-      status: "active"
-    });
-
-    saveState();
-    renderLots();
-    alert(lotId + " (" + actualQty + "주 @ $" + actualPrice.toFixed(2) + ") 장부에 등록되었습니다!");
-  }
-
-  function completeSell(lotId) {
-    const lot = state.lots.find(l => l.id === lotId);
-    if (!lot) return;
-    const targetSell = +(lot.price * (1 + state.targetPct / 100)).toFixed(2);
-    const sellPriceStr = prompt(lot.id + " 실제 익절 체결가($)를 확인해 주세요:", targetSell.toFixed(2));
-    if (sellPriceStr === null) return;
-    const sellPrice = parseFloat(sellPriceStr);
-    if (isNaN(sellPrice) || sellPrice <= 0) return;
-
-    const profit = (sellPrice - lot.price) * lot.qty;
-    lot.status = "sold";
-    lot.sellPrice = sellPrice;
-    state.realizedProfit = +(state.realizedProfit + profit).toFixed(2);
-
-    saveState();
-    renderLots();
-    alert(lot.id + " 익절 완료! 실현 수익: +$" + profit.toFixed(2));
-  }
-
-  function renderLots() {
-    const activeLots = state.lots.filter(l => l.status === "active");
-    const tRate = state.targetPct / 100;
-
-    // 1. Update Sell Table in Tab 1
-    const sellBody = document.getElementById("sellOrderBody");
-    if (activeLots.length === 0) {
-      sellBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b; padding:16px;">현재 보유 중인 루프 묶음이 없습니다.</td></tr>`;
-    } else {
-      sellBody.innerHTML = activeLots.map(l => {
-        const sellTarget = +(l.price * (1 + tRate)).toFixed(2);
-        return `
-          <tr>
-            <td><strong>${l.id}</strong><br/><span style="font-size:11px; color:#64748b;">매수 $${l.price.toFixed(2)}</span></td>
-            <td class="sell-price-cell">$${sellTarget.toFixed(2)}</td>
-            <td><span class="qty-badge">${l.qty}주</span></td>
-            <td><button type="button" class="btn-sell-done" onclick="completeSell('${l.id}')">익절완료</button></td>
-          </tr>
-        `;
-      }).join("");
-    }
-
-    // 2. Update Lot Cards in Tab 2
-    const totalShares = activeLots.reduce((acc, l) => acc + l.qty, 0);
-    document.getElementById("statActiveLots").textContent = `${totalShares}주 (${activeLots.length}개 묶음)`;
-    document.getElementById("statRealizedProfit").textContent = `+$${state.realizedProfit.toFixed(2)}`;
-
-    const listEl = document.getElementById("activeLotsList");
-    if (activeLots.length === 0) {
-      listEl.innerHTML = `<p style="text-align:center; color:#64748b; font-size:13px; padding:16px 0;">보유 중인 활성 묶음이 없습니다.</p>`;
-    } else {
-      listEl.innerHTML = activeLots.map(l => {
-        const sellTarget = +(l.price * (1 + tRate)).toFixed(2);
-        const expProfit = +((sellTarget - l.price) * l.qty).toFixed(2);
-        return `
-          <div class="lot-card">
-            <div class="lot-top">
-              <span class="lot-id">${l.id}</span>
-              <span class="lot-date">${l.date} 체결</span>
-            </div>
-            <div class="lot-grid">
-              <div class="lot-metric">
-                <span>매수단가</span>
-                <strong>$${l.price.toFixed(2)}</strong>
-              </div>
-              <div class="lot-metric">
-                <span>보유수량</span>
-                <strong>${l.qty}주</strong>
-              </div>
-              <div class="lot-metric">
-                <span>목표 LOC매도</span>
-                <strong style="color:#dc2626;">$${sellTarget.toFixed(2)}</strong>
-              </div>
-            </div>
-            <div class="lot-actions">
-              <span class="profit-tag">목표 익절금: +$${expProfit.toFixed(2)}</span>
-              <button type="button" class="btn-sell-done" onclick="completeSell('${l.id}')">매도(익절) 처리</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-  }
-
-  function toggleAddForm() {
-    const f = document.getElementById("addLotForm");
-    f.style.display = f.style.display === "none" ? "block" : "none";
-  }
-
-  function addManualLot() {
-    const p = parseFloat(document.getElementById("manualPrice").value);
-    const q = parseInt(document.getElementById("manualQty").value, 10);
-    if (isNaN(p) || p <= 0 || isNaN(q) || q <= 0) {
-      alert("단가와 수량을 정확히 입력해 주세요.");
-      return;
-    }
-    const lotId = "LP-" + String(state.nextLotNum).padStart(2, "0");
-    state.nextLotNum += 1;
-    state.lots.push({
-      id: lotId,
-      date: new Date().toISOString().slice(0, 10),
-      price: p,
-      qty: q,
-      status: "active"
-    });
-    saveState();
-    renderLots();
-    document.getElementById("manualPrice").value = "";
-    document.getElementById("manualQty").value = "";
-    toggleAddForm();
-  }
-
-  function saveSettings() {
-    state.seed = parseFloat(document.getElementById("setSeed").value) || 10000;
-    state.targetPct = parseFloat(document.getElementById("setTargetPct").value) || 2.5;
-    state.milBudget = parseFloat(document.getElementById("setMilBudget").value) || 450;
-    state.seolBudget = parseFloat(document.getElementById("setSeolBudget").value) || 900;
-    saveState();
-    document.getElementById("headerSeedBadge").textContent = "시드 $" + Number(state.seed).toLocaleString();
-    updateTideUI();
-    recalcOrders();
-    renderLots();
-    alert("설정이 저장되었습니다.");
-  }
-
-  function exportBackup() {
-    const dataStr = JSON.stringify(state);
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(dataStr).then(() => {
-        alert("현재 장부 데이터가 클립보드에 복사되었습니다. 메모장에 붙여넣어 보관하세요.");
-      });
-    } else {
-      prompt("아래 데이터를 복사해 보관하세요:", dataStr);
-    }
-  }
-
-  function resetAllData() {
-    if (confirm("모든 체결 기록을 초기화하고 초기 상태(LP-01 18주 @ $48.87)로 되돌릴까요?")) {
-      localStorage.removeItem(STORAGE_KEY);
-      state = JSON.parse(JSON.stringify(defaultState));
-      init();
-      alert("초기화되었습니다.");
-    }
-  }
-
-  init();
-</script>
+<script src="app.js"></script>
 </body>
 </html>

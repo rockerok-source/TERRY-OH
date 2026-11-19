@@ -7,17 +7,9 @@ const defaultState = {
   targetPct: 2.5,
   milBudget: 450,
   seolBudget: 900,
-  nextLotNum: 2,
+  nextLotNum: 1,
   realizedProfit: 0,
-  lots: [
-    {
-      id: "LP-01",
-      date: "2026-11-19",
-      price: 48.87,
-      qty: 18,
-      status: "active"
-    }
-  ]
+  lots: [0]
 };
 
 let state = loadState();
